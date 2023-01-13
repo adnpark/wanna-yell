@@ -33,7 +33,7 @@ Yell protocol cannot be censored since it is decentralized in nature, built upon
   - Support text contents only
 
 ### Milestone 2
-- Support yield farming with staked ETH
+- Implement yield farming with staked ETH for protocol revenue.
 - Support multimedia contents
 
 
