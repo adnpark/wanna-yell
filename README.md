@@ -11,7 +11,7 @@
 - [ ] Build API server
   - Use nest.js (*should learn how to use it*)
 - [ ] Configure Database
-  - Use PostgreSQL
+  - Use PostgreSQL (*should learn how to use it*)
 - [ ] Build indexer and integrate with database
 - [ ] *Learn how to use infra service such as AWS, Kubernetes, Docker and etc.*
 - [ ] Configure infra
