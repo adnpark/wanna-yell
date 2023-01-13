@@ -17,6 +17,7 @@
 - [ ] Configure infra
   - Use AWS lambda for serverless architecture
 - [ ] *Learn how to develop with React.js*
+- [ ] Build front app with React
 - [ ] Deploy contracts on L2(Arbitrum or Optimism?)
 - [ ] Configure DNS
 - [ ] Release app
