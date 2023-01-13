@@ -22,7 +22,7 @@
 - [ ] Release app
 
 ## What is Wanna Yell?
-**Wanna Yell** is for people who wanna yell to the world. You can say anything you want if you stake some ETH. \n
+**Wanna Yell** is for people who wanna yell to the world. You can say anything you want if you stake some ETH. <br>
 Yell protocol cannot be censored since it is decentralized in nature, built upon Ethereum. 
 
 
