@@ -1,10 +1,10 @@
 # wanna-yell
 
-**Notice: This project is built for learning by doing.**
+**Notice: This project is being built for learning by doing.**
 
 ### Workflow
 #### Milestone 1
-- [ ] Configure monorepo (Should learn how to set monorepo)
+- [ ] Configure monorepo (*should learn how to set monorepo*)
 - [ ] Build ETH staking contract with text uploading feature. (Store text at storage? or calldata? or just hash...? Idk)
   - Use foundry instead of hardhat
   - Use auditing tools like Echidna or Slither for test and audit contracts.
