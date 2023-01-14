@@ -1,0 +1,9 @@
+{
+  "name": "wanna-yell",
+  "packageManager": "yarn@3.3.1",
+  "workspaces": [
+    "./backend",
+    "./contracts",
+    "./frontend"
+  ]
+}
