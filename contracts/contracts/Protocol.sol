@@ -24,35 +24,36 @@ struct Yell {
 
 contract Protocol is ReentrancyGuard {
     Yell[] public yells;
-    mapping(address => uint256[]) public indexes;
+    mapping(address => uint256[]) public userContentIndexes;
 
     event Yelled(address indexed user, string contents, uint256 amount, uint256 createdAt, uint256 validUntil);
     event Withdrawn(address indexed user, uint256 amount);
 
-    function yell(string calldata contents_, uint256 validUntil_) public payable {
-        require(contents_ != "", "Protocol: contents cannot be empty");
+    function yell(string memory contents_, uint256 validUntil_) public payable {
+        // it's ok to convert string to bytes for empty check
+        require(bytes(contents_).length == 0, "Protocol: contents cannot be empty");
         require(validUntil_ > block.timestamp, "Protocol: validUntil must be greater than current timestamp");
         require(msg.value > 0, "Protocol: need to stake ETH to yell");
 
-        yells.push(Yell(contents_, msg.sender, msg.value, block.timestamp, validUntil_, false));
-        indexes[msg.sender].push(yells.length - 1);
+        yells.push(Yell(contents_, msg.sender, msg.value, block.timestamp, validUntil_));
+        userContentIndexes[msg.sender].push(yells.length - 1);
 
         emit Yelled(msg.sender, contents_, msg.value, block.timestamp, validUntil_);
     }
 
     
     function withdraw() public {
-        for (uint256 i = 0; i < indexes[msg.sender].length; i++) {
-            uint256 index = indexes[msg.sender][i];
-            if (yells[index].validUntil < block.timestamp) {
-                withdraw(index);
+        for (uint256 i = 0; i < userContentIndexes[msg.sender].length; i++) {
+            uint256 index = userContentIndexes[msg.sender][i];
+            if (block.timestamp > yells[index].validUntil) {
+                _withdraw(index);
             }
         }
     }
 
     function _withdraw(uint256 index) private nonReentrant{
         // content will be reset to empty string after withdrawal
-        require(yells[index].contents != "", "Protocol: already withdrawn");
+        require(bytes(yells[index].contents).length == 0, "Protocol: already withdrawn");
         require(yells[index].owner == msg.sender, "Protocol: not authorized");
 
         uint256 amount = yells[index].amount;
@@ -65,10 +66,25 @@ contract Protocol is ReentrancyGuard {
     }
 
     function getContents() public view returns (Yell[] memory) {
-
+        Yell[] memory _yells = new Yell[](yells.length);
+        for (uint256 i = 0; i < yells.length; i++) {
+            if (bytes(yells[i].contents).length == 0) {
+                continue;
+            }
+            _yells[i] = yells[i];
+        }
+        return _yells;
     }
 
-    function getMyContents() public view returns (Yell[] memory) {
-
+    function getUserContents(address user) public view returns (Yell[] memory) {
+        Yell[] memory myYells = new Yell[](userContentIndexes[user].length);
+        for (uint256 i = 0; i < userContentIndexes[user].length; i++) {
+            uint256 index = userContentIndexes[user][i];
+            if (bytes(yells[index].contents).length == 0) {
+                continue;
+            }
+            myYells[i] = yells[index];
+        }
+        return myYells;
     }
 }
